@@ -7,6 +7,8 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import TimerScreen from './screens/TimerScreen';
 import MetricsScreen from './screens/MetricsScreen';
 import IconButton from './components/UI/IconButton';
+import { Ionicons, Feather } from '@expo/vector-icons';
+import { colors } from './constants/colors';
 
 // const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -17,7 +19,25 @@ export default function App() {
             <Tab.Navigator
                 initialRouteName='Timer'
                 screenOptions={({ navigation }) => ({
-                    // headerShown: false,
+                    headerStyle: {
+                        backgroundColor: colors.black,
+                        elevation: 0,
+                        shadowOpacity: 0,
+                        borderBottomWidth: 0,
+                    },
+                    headerTintColor: colors.green,
+                    headerShadowVisible: false,
+                    headerTitle: () => {
+                        return null;
+                    },
+                    tabBarStyle: {
+                        backgroundColor: colors.black,
+                        elevation: 0,
+                        shadowOpacity: 0,
+                        borderTopWidth: 0,
+                    },
+                    tabBarActiveTintColor: colors.green,
+                    tabBarInactiveTintColor: colors.gray,
                 })}
             >
                 <Tab.Screen
@@ -31,6 +51,7 @@ export default function App() {
                                 color={tintColor}
                                 onPress={() => console.log('Pressed')}
                                 title='New Task'
+                                titleColor={colors.green}
                             />
                         ),
                         headerRight: ({ tintColor }) => (
@@ -41,12 +62,23 @@ export default function App() {
                                 onPress={() => console.log('Pressed')}
                             />
                         ),
+                        tabBarIcon: ({ color, size }) => (
+                            <Feather name='clock' color={color} size={size} />
+                        ),
                     }}
                 />
                 <Tab.Screen
                     name='Metrics'
                     component={MetricsScreen}
-                    options={{}}
+                    options={{
+                        tabBarIcon: ({ color, size }) => (
+                            <Ionicons
+                                name='stats-chart'
+                                color={color}
+                                size={size}
+                            />
+                        ),
+                    }}
                 />
             </Tab.Navigator>
         </NavigationContainer>

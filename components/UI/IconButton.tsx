@@ -1,10 +1,4 @@
-import {
-    StyleSheet,
-    Text,
-    View,
-    Pressable,
-    GestureResponderEvent,
-} from 'react-native';
+import { StyleSheet, Text, View, Pressable, ColorValue } from 'react-native';
 import React from 'react';
 import { Ionicons } from '@expo/vector-icons';
 
@@ -14,6 +8,7 @@ export type IconButtonProps = {
     color?: string;
     onPress: () => void;
     title?: string;
+    titleColor?: ColorValue;
 };
 
 const IconButton: React.FC<IconButtonProps> = ({
@@ -22,6 +17,7 @@ const IconButton: React.FC<IconButtonProps> = ({
     color,
     onPress,
     title,
+    titleColor,
 }) => {
     return (
         <Pressable
@@ -30,7 +26,9 @@ const IconButton: React.FC<IconButtonProps> = ({
         >
             <View style={styles.buttonContainer}>
                 <Ionicons name={icon} size={size} color={color} />
-                <Text style={styles.title}>{title}</Text>
+                <Text style={[styles.title, { color: titleColor }]}>
+                    {title}
+                </Text>
             </View>
         </Pressable>
     );
@@ -48,7 +46,7 @@ const styles = StyleSheet.create({
         marginVertical: 2,
     },
     pressed: {
-        opacity: 0.75,
+        opacity: 0.6,
     },
     title: {
         paddingLeft: 4,
