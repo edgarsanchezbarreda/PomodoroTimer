@@ -5,6 +5,11 @@ import TimerButton from '../components/UI/TimerButton';
 import { Entypo, AntDesign } from '@expo/vector-icons';
 import { setStatusBarBackgroundColor } from 'expo-status-bar';
 
+interface ITimer {
+    seconds: number;
+    minutes: number;
+}
+
 const TimerScreen = () => {
     const timerInitialState = { seconds: 7, minutes: 0 };
 
@@ -18,31 +23,78 @@ const TimerScreen = () => {
     let updatedSeconds = time.seconds;
     let updatedMinutes = time.minutes;
 
-    const play = () => {
-        if (updatedSeconds === 0 && updatedMinutes > 0) {
-            updatedMinutes--;
-            updatedSeconds = 60;
-        }
-        if (updatedSeconds === 0 && updatedMinutes === 0) {
-            console.log('Timer Over!!');
-            setPlayStatus(0);
-            setTime(timerInitialState);
-            return;
-        }
-        updatedSeconds--;
+    // const play = () => {
+    //     if (playStatus === 1 && updatedSeconds === 0 && updatedMinutes > 0) {
+    //         updatedMinutes--;
+    //         updatedSeconds = 60;
+    //     }
+    //     if (updatedSeconds === 0 && updatedMinutes === 0) {
+    //         console.log('Timer Over!!');
+    //         setPlayStatus(0);
+    //         setTime(timerInitialState);
+    //         updatedSeconds = timerInitialState.seconds;
+    //         updatedMinutes = timerInitialState.minutes;
+    //         // clearTimeout(intervalHandler);
+    //         return;
+    //     }
+    //     // if (playStatus === 1) {
+    //     //     updatedSeconds--;
+    //     // }
+    //     updatedSeconds--;
+    //     // console.log(updatedSeconds);
+    //     // console.log(updatedMinutes);
+    //     console.log(playStatus);
 
-        return setTime({ seconds: updatedSeconds, minutes: updatedMinutes });
-    };
+    //     return setTime({ seconds: updatedSeconds, minutes: updatedMinutes });
+    // };
 
     const startTimerHandler = () => {
-        play();
         setPlayStatus(1);
-        setIntervalHandler(setInterval(play, 1000));
+        if (playStatus === 1) {
+            if (
+                playStatus === 1 &&
+                updatedSeconds === 0 &&
+                updatedMinutes > 0
+            ) {
+                updatedMinutes--;
+                updatedSeconds = 60;
+            }
+            if (updatedSeconds === 0 && updatedMinutes === 0) {
+                console.log('Timer Over!!');
+                setPlayStatus(0);
+                setTime(timerInitialState);
+                updatedSeconds = timerInitialState.seconds;
+                updatedMinutes = timerInitialState.minutes;
+                // clearTimeout(intervalHandler);
+                return;
+            }
+            // if (playStatus === 1) {
+            //     updatedSeconds--;
+            // }
+            updatedSeconds--;
+            // console.log(updatedSeconds);
+            // console.log(updatedMinutes);
+            console.log(playStatus);
+
+            return setTime({
+                seconds: updatedSeconds,
+                minutes: updatedMinutes,
+            });
+        } else {
+            return;
+        }
     };
+    // const startTimerHandler = () => {
+    //     setPlayStatus(1);
+    //     play();
+    //     console.log('startTimeHandler');
+    //     setIntervalHandler(setInterval(play, 1000));
+    // };
 
     const stopTimerHandler = () => {
-        clearInterval(intervalHandler);
+        console.log('stopTimeHandler');
         setPlayStatus(0);
+        clearInterval(intervalHandler);
         // setPlayStatus(2);
     };
 
@@ -78,6 +130,7 @@ const TimerScreen = () => {
             <View>
                 {/* Button Container */}
                 <TimerButton
+                    time={time}
                     playStatus={playStatus}
                     startTimerHandler={startTimerHandler}
                     stopTimerHandler={stopTimerHandler}

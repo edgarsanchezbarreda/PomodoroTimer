@@ -4,6 +4,7 @@ import { colors } from '../../constants/colors';
 import { AntDesign, Entypo } from '@expo/vector-icons';
 
 interface TimerButtonProps {
+    time: { seconds: number; minutes: number };
     playStatus: number;
     startTimerHandler: () => void;
     stopTimerHandler: () => void;
@@ -12,21 +13,24 @@ interface TimerButtonProps {
 }
 
 const TimerButton: React.FC<TimerButtonProps> = ({
+    time,
     playStatus,
     startTimerHandler,
     stopTimerHandler,
     resetTimerHandler,
     resumeTimerHandler,
 }) => {
-    const handleButtonPress = () => {
-        if (playStatus === 0) {
-            startTimerHandler();
-        } else if (playStatus === 1) {
-            stopTimerHandler();
-        } else if (playStatus === 2) {
-            resumeTimerHandler();
-        }
-    };
+    // const handleButtonPress = () => {
+    //     if (playStatus === 0) {
+    //         return startTimerHandler();
+    //     } else if (playStatus === 1) {
+    //         return stopTimerHandler();
+    //     } else if (playStatus === 2) {
+    //         return resumeTimerHandler();
+    //     } else {
+    //         return resetTimerHandler();
+    //     }
+    // };
 
     const playButtonIcon = () => {};
 
@@ -38,7 +42,9 @@ const TimerButton: React.FC<TimerButtonProps> = ({
                     styles.startButton,
                     pressed && styles.pressed,
                 ]}
-                onPress={handleButtonPress}
+                onPress={
+                    playStatus === 0 ? startTimerHandler : stopTimerHandler
+                }
             >
                 <View>
                     {playStatus === 1 ? (
