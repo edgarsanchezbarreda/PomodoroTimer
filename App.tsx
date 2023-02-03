@@ -1,7 +1,7 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
-// import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 import TimerScreen from './screens/TimerScreen';
@@ -9,9 +9,11 @@ import MetricsScreen from './screens/MetricsScreen';
 import IconButton from './components/UI/IconButton';
 import { Ionicons, Feather } from '@expo/vector-icons';
 import { colors } from './constants/colors';
+import SettingsScreen from './screens/SettingsScreen';
 
 // const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
+const Stack = createNativeStackNavigator();
 
 export default function App() {
     return (
@@ -43,7 +45,7 @@ export default function App() {
                 <Tab.Screen
                     name='Timer'
                     component={TimerScreen}
-                    options={{
+                    options={({ navigation }) => ({
                         headerLeft: ({ tintColor }) => (
                             <IconButton
                                 icon='add'
@@ -59,13 +61,15 @@ export default function App() {
                                 icon='options-outline'
                                 size={24}
                                 color={tintColor}
-                                onPress={() => console.log('Pressed')}
+                                onPress={() => {
+                                    navigation.navigate('SettingsScreen');
+                                }}
                             />
                         ),
                         tabBarIcon: ({ color, size }) => (
                             <Feather name='clock' color={color} size={size} />
                         ),
-                    }}
+                    })}
                 />
                 <Tab.Screen
                     name='Metrics'
