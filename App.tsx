@@ -15,79 +15,184 @@ import SettingsScreen from './screens/SettingsScreen';
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
 
+const TimerOverview = () => {
+    return (
+        <Tab.Navigator
+            initialRouteName='Timer'
+            screenOptions={({ navigation }) => ({
+                headerStyle: {
+                    backgroundColor: colors.black,
+                    elevation: 0,
+                    shadowOpacity: 0,
+                    borderBottomWidth: 0,
+                },
+                headerTintColor: colors.green,
+                headerShadowVisible: false,
+                headerTitle: () => {
+                    return null;
+                },
+                tabBarStyle: {
+                    backgroundColor: colors.black,
+                    elevation: 0,
+                    shadowOpacity: 0,
+                    borderTopWidth: 0,
+                },
+                tabBarActiveTintColor: colors.green,
+                tabBarInactiveTintColor: colors.gray,
+            })}
+        >
+            <Tab.Screen
+                name='Timer'
+                component={TimerScreen}
+                options={({ navigation }) => ({
+                    headerLeft: ({ tintColor }) => (
+                        <IconButton
+                            icon='add'
+                            size={24}
+                            color={tintColor}
+                            onPress={() => console.log('Pressed')}
+                            title='New Task'
+                            titleColor={colors.green}
+                        />
+                    ),
+                    headerRight: ({ tintColor }) => (
+                        <IconButton
+                            icon='options-outline'
+                            size={24}
+                            color={tintColor}
+                            onPress={() => {
+                                navigation.navigate('SettingsScreen');
+                            }}
+                        />
+                    ),
+                    tabBarIcon: ({ color, size }) => (
+                        <Feather name='clock' color={color} size={size} />
+                    ),
+                })}
+            />
+            <Tab.Screen
+                name='Metrics'
+                component={MetricsScreen}
+                options={{
+                    tabBarIcon: ({ color, size }) => (
+                        <Ionicons
+                            name='stats-chart'
+                            color={color}
+                            size={size}
+                        />
+                    ),
+                }}
+            />
+        </Tab.Navigator>
+    );
+};
+
 export default function App() {
     return (
-        <NavigationContainer>
-            <Tab.Navigator
-                initialRouteName='Timer'
-                screenOptions={({ navigation }) => ({
-                    headerStyle: {
-                        backgroundColor: colors.black,
-                        elevation: 0,
-                        shadowOpacity: 0,
-                        borderBottomWidth: 0,
-                    },
-                    headerTintColor: colors.green,
-                    headerShadowVisible: false,
-                    headerTitle: () => {
-                        return null;
-                    },
-                    tabBarStyle: {
-                        backgroundColor: colors.black,
-                        elevation: 0,
-                        shadowOpacity: 0,
-                        borderTopWidth: 0,
-                    },
-                    tabBarActiveTintColor: colors.green,
-                    tabBarInactiveTintColor: colors.gray,
-                })}
-            >
-                <Tab.Screen
-                    name='Timer'
-                    component={TimerScreen}
-                    options={({ navigation }) => ({
-                        headerLeft: ({ tintColor }) => (
-                            <IconButton
-                                icon='add'
-                                size={24}
-                                color={tintColor}
-                                onPress={() => console.log('Pressed')}
-                                title='New Task'
-                                titleColor={colors.green}
-                            />
-                        ),
-                        headerRight: ({ tintColor }) => (
-                            <IconButton
-                                icon='options-outline'
-                                size={24}
-                                color={tintColor}
-                                onPress={() => {
-                                    navigation.navigate('SettingsScreen');
-                                }}
-                            />
-                        ),
-                        tabBarIcon: ({ color, size }) => (
-                            <Feather name='clock' color={color} size={size} />
-                        ),
-                    })}
-                />
-                <Tab.Screen
-                    name='Metrics'
-                    component={MetricsScreen}
-                    options={{
-                        tabBarIcon: ({ color, size }) => (
-                            <Ionicons
-                                name='stats-chart'
-                                color={color}
-                                size={size}
-                            />
-                        ),
-                    }}
-                />
-            </Tab.Navigator>
-        </NavigationContainer>
+        <>
+            <StatusBar style='light' />
+            <NavigationContainer>
+                <Stack.Navigator>
+                    <Stack.Screen
+                        name='TimerOverview'
+                        component={TimerOverview}
+                        options={{
+                            headerShown: false,
+                        }}
+                    />
+                    <Stack.Screen
+                        name='SettingsScreen'
+                        component={SettingsScreen}
+                        options={{
+                            presentation: 'modal',
+                            title: 'Settings',
+                            headerTitleStyle: {
+                                color: colors.green,
+                            },
+                            headerStyle: {
+                                backgroundColor: colors.black,
+                            },
+                        }}
+                    />
+                </Stack.Navigator>
+            </NavigationContainer>
+        </>
     );
 }
+
+// export default function App() {
+//     return (
+//         <NavigationContainer>
+//             <Tab.Navigator
+//                 initialRouteName='Timer'
+//                 screenOptions={({ navigation }) => ({
+//                     headerStyle: {
+//                         backgroundColor: colors.black,
+//                         elevation: 0,
+//                         shadowOpacity: 0,
+//                         borderBottomWidth: 0,
+//                     },
+//                     headerTintColor: colors.green,
+//                     headerShadowVisible: false,
+//                     headerTitle: () => {
+//                         return null;
+//                     },
+//                     tabBarStyle: {
+//                         backgroundColor: colors.black,
+//                         elevation: 0,
+//                         shadowOpacity: 0,
+//                         borderTopWidth: 0,
+//                     },
+//                     tabBarActiveTintColor: colors.green,
+//                     tabBarInactiveTintColor: colors.gray,
+//                 })}
+//             >
+//                 <Tab.Screen
+//                     name='Timer'
+//                     component={TimerScreen}
+//                     options={({ navigation }) => ({
+//                         headerLeft: ({ tintColor }) => (
+//                             <IconButton
+//                                 icon='add'
+//                                 size={24}
+//                                 color={tintColor}
+//                                 onPress={() => console.log('Pressed')}
+//                                 title='New Task'
+//                                 titleColor={colors.green}
+//                             />
+//                         ),
+//                         headerRight: ({ tintColor }) => (
+//                             <IconButton
+//                                 icon='options-outline'
+//                                 size={24}
+//                                 color={tintColor}
+//                                 onPress={() => {
+//                                     navigation.navigate('SettingsScreen');
+//                                 }}
+//                             />
+//                         ),
+//                         tabBarIcon: ({ color, size }) => (
+//                             <Feather name='clock' color={color} size={size} />
+//                         ),
+//                     })}
+//                 />
+//                 <Tab.Screen
+//                     name='Metrics'
+//                     component={MetricsScreen}
+//                     options={{
+//                         tabBarIcon: ({ color, size }) => (
+//                             <Ionicons
+//                                 name='stats-chart'
+//                                 color={color}
+//                                 size={size}
+//                             />
+//                         ),
+//                     }}
+//                 />
+//             </Tab.Navigator>
+//         </NavigationContainer>
+//     );
+// }
 
 const styles = StyleSheet.create({
     container: {

@@ -10,6 +10,7 @@ export const colors = {
     grayBackground: '#fafaf5',
     grayInactive: '#D3D3D3',
     black: '#0e0e0e',
+    blackSecondary: '#131313',
 };
 
 // export const colors = {
